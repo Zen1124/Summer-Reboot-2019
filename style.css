@@ -1,0 +1,65 @@
+.center-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.center-text {
+  text-align: center;
+}
+.text-box {
+  background: rgba(0,0,255,0.5);
+  text-align: center;
+  left: 20%;
+  margin-left: -50px;
+  padding: 30px;
+  width: 60%;
+  position: fixed;
+  bottom: 10px;
+  border: 3px solid black;
+}
+
+.text-box p {
+  color: white;
+  font-size: 25px;
+  font-family: Helvetica;
+}
+
+.text-box h1 {
+  color: black;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Helvetica;
+}
+
+
+.prompt-box {
+  background: rgba(0,0,255,0.5);
+  text-align: center;
+  left: 20%;
+  margin-left: -50px;
+  padding: 30px;
+  width: 60%;
+  position: fixed;
+  bottom: 10px;
+  border: 3px solid black;
+}
+.prompt-box p {
+  color: white;
+  font-size: 25px;
+  font-family: Helvetica;
+}
+
+.prompt-box input {
+  padding: 3px;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: Helvetica;
+}
+
+.prompt-box h1 {
+  color: black;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Helvetica;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <title>Intro</title>
+    <style>
+      body {
+        background-color: blue;
+        background-image: url("house.jpg");
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <audio class="ringtone">
+      <source src="ringtone.mp3" type="audio/mpeg">
+    </audio>
+    <div class="text-box">
+      <h1>You</h1>
+      <p>Its a peaceful Sunday night, the rain just stopped and——</p>
+    </div>
+    <script>
+      $(document).ready(() => {
+        let name;
+        let regex = /^[A-Za-z0-9]+$/
+        //Text-box Click Events
+        $(".text-box").click(() => {
+          $(".text-box").html("<h1>Your Nokia</h1><i><p>*Ring Ring*</p></i>");
+          $(".ringtone").get(0).play();
+
+          $(".text-box").click(() => {
+            $(".text-box").html("<h1>You</h1><p>Great, my Sunday has just been ruined by a nokia ringtone</p>");
+
+            $(".text-box").click(() => {
+              $(".text-box").html("<h1>Caller</h1><p>A stern voice answers, 'Hello, uhhh'</p>");
+              $(".ringtone").get(0).pause();
+              //Prompt for name
+              $(".text-box").click(() => {
+                $(".text-box").remove();
+                $("body").html(`
+                  <div class="prompt-box">
+                    <h1>Caller</h1>
+                    <p>'Sorry, what was your name again?'</p> <input type='text' class='name'>
+                  </div>
+                `);
+                $(document).keypress((e) => {
+                  if(e.which == 13) {
+                    name = $(".name").val();
+                    console.log(name);
+                    let isValid = regex.test(name);
+                    if (parseInt(name) || !isValid) {
+                      alert("Please input a name using only letters!");
+                    } else {
+                      //Local storage to save input name
+                      localStorage.setItem("Name", name);
+                      $("body").html(`
+                        <div class="text-box">
+                          <h1>John</h1>
+                          <p>"Ok, ${name}, I'm John and I'm just calling to see if you know who Joe is?."</p>
+                        </div>
+                      `);
+                      $(".text-box").click(() => {
+                        $(".text-box").html(`<h1>${name}</h1><i><p>(Ends the call immediately)</p></i>`);
+
+                        $(".text-box").click(() => {
+                          $(".text-box").html(`<h1>${name}</h1><p>I really don't have time for this...</p>`);
+
+                          $(".text-box").click(() => {
+                            $(".text-box").html(`<h1>${name}</h1><i><p>(Falls asleep)</p></i>`);
+
+                            $(".text-box").click(() => {
+                              $("body").fadeOut(2000, () => {
+                                window.location.href = "page 1.html"
+                              });
+                            });
+                          });
+                        });
+                      });
+                    }
+                  }
+                });
+
+              });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

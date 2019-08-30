@@ -19,20 +19,6 @@
         background-size: cover;
         position: relative;
       }
-      .list {
-        padding: 10px;
-        background-color: #b99566;
-        border: 1px solid black;
-        width: 30%;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .list p {
-        font: 400 20px/1.3 'Oleo Script', Helvetica, sans-serif;
-        color: #2b2b2b;
-        text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-      }
     </style>
   </head>
   <body>
@@ -74,26 +60,17 @@
                     dataType: 'json',
                     success: function(data) {
                       $("body").append(`<div class="list"></div>`);
-                      let johnAdded = false;
-                      let johnPosition = Math.floor((Math.random() * 6) + 1);
-                      console.log(johnPosition);
                       let listOfPeople = data.results;
-                      localStorage.setItem("People", listOfPeople);
-
+                      localStorage.setItem("People", JSON.stringify(listOfPeople));
                       for(let x = 0;x < listOfPeople.length;x++) {
-                        if(!johnAdded && johnPosition == x + 1) {
-                          $(".list").append(`<p>John Parker</p>`);
-                          johnAdded = true;
-                          x--;
-                        } else {
-                          $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
-                        }
+                        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
                       }
+                      $(".list").append(`<p>John Parker</p>`);
 
                         setTimeout(() => {
-                          $(".list").fadeOut(2000, () => {
+                          $(".list").fadeOut(3000, () => {
                             $(".text-box").html(`<h1>${name}</h1><p>So what exactly do you want me to do?</p>`);
-                            $(".text-box").fadeIn(1000)
+                            $(".text-box").fadeIn(1000);
 
                             $(".text-box").click(() => {
                               $(".text-box").html(`<h1>Boss</h1><p>I want you to "talk" to these individuals about the money they borrowed.</p>`);
@@ -125,7 +102,30 @@
                                           $(".text-box").html(`<h1>${name}</h1><p>Jesus, how am I going to find these guys by myself...</p>`);
 
                                           $(".text-box").click(() => {
-                                            $(".text-box").html(`<h1>${name}</h1><p>Jesus, how am I going to find these guys by myself...</p>`);
+                                            $("body").append(`<div class="decisions"></div>`);
+                                            $(".decisions").append(`<div class="decision" id="d-1"><p>Search Online</p></div>`);
+                                            $(".decisions").append(`<div class="decision" id="d-2"><p>Phone Book</p></div>`);
+
+                                            //User choses online
+                                            $("#d-1").click(() => {
+                                              $(".decisions").hide();
+                                              $(".text-box").html(`<h1>${name}</h1><p>Search for them online? Of course!</p>`);
+                                              $(".text-box").click(() => {
+                                                $(".text-box").fadeOut(2000, () => { //scene change, next page
+                                                  window.location.href = "online.html"
+                                                });
+                                              });
+                                            });
+                                            //User choses phone
+                                            $("#d-2").click(() => {
+                                              $(".decisions").hide();
+                                              $(".text-box").html(`<h1>${name}</h1><p>Lets go old school, I guess.</p>`);
+                                              $(".text-box").click(() => {
+                                                $(".text-box").fadeOut(2000, () => { //scene change, next page
+                                                  window.location.href = "phone.html"
+                                                });
+                                              });
+                                            });
                                           });
                                         });
                                       });

@@ -41,7 +41,7 @@
             $(".text-box").html("<h1>You</h1><p>Great, my Sunday has just been ruined by a nokia ringtone</p>");
 
             $(".text-box").click(() => {
-              $(".text-box").html("<h1>Caller</h1><p>A stern voice answers, 'Hello, uhhh'</p>");
+              $(".text-box").html("<h1>Caller</h1><p>A stern voice answers, 'Hello'</p>");
               $(".ringtone").get(0).pause();
               //Prompt for name
               $(".text-box").click(() => {
@@ -49,7 +49,7 @@
                 $("body").html(`
                   <div class="prompt-box">
                     <h1>Caller</h1>
-                    <p>'Sorry, what was your name again?'</p> <input type='text' class='name'>
+                    <p>'May I ask for your name, sir?'</p> <input type='text' class='name'>
                   </div>
                 `);
                 $(document).keypress((e) => {
@@ -65,21 +65,29 @@
                       $("body").html(`
                         <div class="text-box">
                           <h1>John</h1>
-                          <p>"Ok, ${name}, I'm John and I'm just calling to see if you know who Joe is?."</p>
+                          <p>"Ok, ${name}, I'm John Parker from Parker and Smiths. and I'm just calling to see if you know who Joe is?."</p>
                         </div>
                       `);
                       $(".text-box").click(() => {
-                        $(".text-box").html(`<h1>${name}</h1><i><p>(Ends the call immediately)</p></i>`);
+                        $(".text-box").html(`<h1>${name}</h1><p>Who is Joe?</p>`);
 
                         $(".text-box").click(() => {
-                          $(".text-box").html(`<h1>${name}</h1><p>I really don't have time for this...</p>`);
+                          $(".text-box").html(`<h1>John</h1><p>Joe Mamma</p>`);
 
                           $(".text-box").click(() => {
-                            $(".text-box").html(`<h1>${name}</h1><i><p>(Falls asleep)</p></i>`);
+                            $(".text-box").html(`<h1>${name}</h1><i><p>(Ends the call immediately)</p></i>`);
 
                             $(".text-box").click(() => {
-                              $("body").fadeOut(2000, () => {
-                                window.location.href = "page 1.html"
+                              $(".text-box").html(`<h1>${name}</h1><p>I really don't have time for this...</p>`);
+
+                              $(".text-box").click(() => {
+                                $(".text-box").html(`<h1>${name}</h1><i><p>(Falls asleep)</p></i>`);
+
+                                $(".text-box").click(() => {
+                                  $("body").fadeOut(2000, () => { //scene change, next page
+                                    window.location.href = "page 1.html"
+                                  });
+                                });
                               });
                             });
                           });

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <title>The Internet</title>
+    <style>
+      body {
+        background-color: white;
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+      .day {
+        color: black;
+      }
+      .title {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="day">Day 1</div>
+    <div class="container">
+      <h1 class="title">White Pages</h1>
+      <button class="show-list-button">Show List</button>
+      <input class="search-bar"></input>
+      <button class="search-button">Search</button>
+      <div class="text-box"></div>
+      <div class="results"></div>
+    </div>
+    <script>
+    $(document).ready(() => {
+      //Capitalization Function
+      const capitalize = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+      const checkIfTarget = (value) => {
+        for(x = 0;x < listOfPeople.length;x++) {
+          if(value.toLowerCase() === `${listOfPeople[x].name.first} ${listOfPeople[x].name.last}`) {
+            return true
+          } else if(value.toLowerCase() === "john parker") {
+            return true
+          }
+        }
+        return false
+      }
+
+      const findTarget = (value) => {
+        for(x = 0;x < listOfPeople.length;x++) {
+          if(value.toLowerCase() === `${listOfPeople[x].name.first} ${listOfPeople[x].name.last}`) {
+            return listOfPeople[x]
+          } else if(value.toLowerCase() === "john parker"){
+            return "john parker"
+          }
+        }
+      }
+      //Local storage to retrieve name player gave and list of targets
+      let name = localStorage.getItem("Name");
+      let listOfPeople = JSON.parse(localStorage.getItem("People"));
+      console.log(listOfPeople);
+      $(".container").prepend(`<div class="list"></div>`);
+      for(let x = 0;x < listOfPeople.length;x++) {
+        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
+      }
+      $(".list").append(`<p>John Parker</p>`);
+      $(".list").hide();
+      //Story Start
+      $(".list").fadeIn(2000, () => {
+        $(".text-box").html(`<h1>${name}</h1><p>Who should I start with first? Hmmmm</p>`);
+
+        let searchVal;
+        //Search Bar
+        $(".search-button").click(() => {
+          searchVal = $(".search-bar").val();
+          let searchResult;
+          if(checkIfTarget(searchVal)) { //checks if user input is a target
+            $(".results").html(`<h2>Showing results for ${searchVal}</h2>`)
+            $(".text-box").html(`<h1>${name}</h1><p>Ezpz, we got them</p>`);
+            searchResult = findTarget(searchVal);
+            if (searchResult == "john parker") { // john parker
+              $(".results").append(`<img src="image not available.jpg"/><br>
+                                    <h1>John Parker</h1> <br>
+                                    <b>Cell: (212)-234-9864</b> <br>
+                                    <b>Age: 37</b> <br>
+                                    <b>Gender: Male</b> <br>
+                                    <b>Location: Manhattan, New York</b> <br>
+                                    <b>Email: john.parker@example.com</b>`);
+              $(".text-box").click(() => {
+                $(".text-box").html(`<h1>${name}</h1><p>Mr. Parker, you are in for a rude awakening</p>`);
+                $(".text-box").click(() => {
+                  $(".text-box").fadeOut(2000, () => {
+                    window.location.href = "lawyer.html"
+                  });
+                });
+              });
+            } else { //random targets
+              $(".search-button").off();
+              $(".text-box").html(`<h1>${name}</h1><p>Ezpz, we got them</p>`);
+              $(".results").append(`<img src="${searchResult.picture.large}"/><br>
+                                    <h1>${capitalize(searchResult.name.first)} ${capitalize(searchResult.name.last)}</h1> <br>
+                                    <b>Cell: ${searchResult.cell}</b> <br>
+                                    <b>Age: ${searchResult.dob.age}</b> <br>
+                                    <b>Gender: ${capitalize(searchResult.gender)}</b> <br>
+                                    <b>Location: Manhattan, New York</b> <br>
+                                    <b>Email: ${searchResult.email}</b>`);
+
+              $(".text-box").click(() => {
+                if(searchResult.gender == "male") {
+                  $(".text-box").html(`<h1>${name}</h1><p>Mr. ${capitalize(searchResult.name.last)}, you are in for a rude awakening</p>`);
+                } else {
+                  $(".text-box").html(`<h1>${name}</h1><p>Mrs. ${capitalize(searchResult.name.last)}, you are in for a rude awakening</p>`);
+                }
+                $(".text-box").click(() => {
+                  $(".text-box").fadeOut(2000, () => {
+                    window.location.href = "target.html"
+                  });
+                });
+              })
+
+            }
+          } else { //anything other than the targets
+            $(".results").html(`<h2>Showing results for ${searchVal}</h2>`)
+            $(".text-box").html(`<h1>${name}</h1><p>This person isn't on the list!</p>`);
+
+
+          }
+
+        });
+      });
+      //Show List Button
+      $(".show-list-button").click(() => {
+        $(".list").show();
+      });
+      $(".list").click(() => {
+        $(".list").hide();
+      });
+
+    });
+    </script>
+  </body>
+</html>

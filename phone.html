@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <title>Phone Booth</title>
+    <style>
+      body {
+        background-color: blue;
+        background-image: url("phone booth.jpg");
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="day">Day 1</div>
+      <div class="text-box">
+
+      </div>
+      <button class="show-list-button">Show List</button>
+    </div>
+
+    <script>
+    $(document).ready(() => {
+      //Capitalization Function
+      const capitalize = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+      //Local storage to retrieve name player gave and list of targets
+      let name = localStorage.getItem("Name");
+      let listOfPeople = JSON.parse(localStorage.getItem("People"));
+      console.log(listOfPeople);
+      $("body").append(`<div class="list"></div>`);
+      for(let x = 0;x < listOfPeople.length;x++) {
+        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
+      }
+      $(".list").append(`<p>John Parker</p>`);
+      $(".list").hide();
+      $(".list").fadeIn(2000, () => {
+        $(".text-box").html(`<h1>${name}</h1><p>Who should I start with first? Hmmmm</p>`);
+
+        $(".text-box").click(()=> {
+          $(".text-box").html(`<h1>${name}</h1><p>Hey wait, I recognize this name. John Parker</p>`);
+
+          $(".text-box").click(()=> {
+            $(".text-box").html(`<h1>${name}</h1><p>We're definitely starting with him</p>`);
+
+            $(".text-box").click(()=> {
+              $(".text-box").html(`<h1>${name}</h1><p><i>Looks through the phone book</i></p>`);
+
+              $(".text-box").click(()=> {
+                $(".text-box").html(`<h1>${name}</h1><p>Ah, got it!</p>`);
+
+                $(".text-box").click(()=> {
+                  $(".text-box").html(`<h1>Phone Book</h1><p><i>Parker and Smiths, 1-212-234-9864 </i></p>`);
+
+                  $(".text-box").click(()=> {
+                    $(".text-box").html(`<h1>${name}</h1><p><i>Dials in the number</i></p>`);
+
+                    $(".text-box").click(()=> {
+                      $(".text-box").html(`<h1>${name}</h1><p>Hello, is this Mr. Parker or perhaps Mr. Smith?</p>`);
+
+                      $(".text-box").click(()=> {
+                        $(".text-box").html(`<h1>Mr. Smith</h1><p>Yes, this is Mr. Smith. Are you in need of an attorney?</p>`);
+
+                        $(".text-box").click(()=> {
+                          $(".text-box").html(`<h1>${name}</h1><p>Yes, I need to settle a debt.</p>`);
+
+                          $(".text-box").click(()=> {
+                            $(".text-box").html(`<h1>Mr.Smith</h1><p>Ah, Mr Parker is very skilled in that field. You can meet with him now if you like. We are located on 30th Street.</p>`);
+
+                            $(".text-box").click(()=> {
+                              $(".text-box").html(`<h1>${name}</h1><p>Perfect</p>`);
+
+                              $(".text-box").click(()=> {
+                                $(".text-box").fadeOut(() => {
+                                  window.location.href = "lawyer.html"
+                                });
+
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+      //Show List Button
+      $(".show-list-button").click(() => {
+        $(".list").show();
+      });
+      $(".list").click(() => {
+        $(".list").hide();
+      });
+    });
+    </script>
+  </body>
+</html>

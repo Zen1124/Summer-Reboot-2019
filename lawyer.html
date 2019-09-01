@@ -44,7 +44,6 @@
     </div>
     <div class="container">
       <div class="day">Day 1</div>
-      <button class="show-list-button">Show List</button>
       <img src="parker.png" class="parker"/>
       <div class="text-box">
 
@@ -59,17 +58,8 @@
       const capitalize = (s) => {
         return s.charAt(0).toUpperCase() + s.slice(1)
       }
-      //Local storage to retrieve name player gave and list of targets
+      //Local storage to retrieve name player gave
       let name = localStorage.getItem("Name");
-      let listOfPeople = JSON.parse(localStorage.getItem("People"));
-      console.log(listOfPeople);
-      $("body").append(`<div class="list"></div>`);
-      for(let x = 0;x < listOfPeople.length;x++) {
-        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
-      }
-      $(".list").append(`<p>John Parker</p>`);
-      $(".list").hide();
-
       $(".parker").fadeIn(2000, () => {
         $(".text-box").html(`<h1>John</h1><p>We finally meet, ${name}.</p>`);
 
@@ -99,15 +89,6 @@
             });
           });
         });
-      });
-
-
-      //Show List Button
-      $(".show-list-button").click(() => {
-        $(".list").show();
-      });
-      $(".list").click(() => {
-        $(".list").hide();
       });
     });
     </script>

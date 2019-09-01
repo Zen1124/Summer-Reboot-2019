@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <title>Lawyer's Office</title>
+    <style>
+      body {
+        background-color: blue;
+        background-image: url("lawyer-background.jpg");
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .parker {
+        width: 40%;
+        height: 900px;
+        top: 100%;
+      }
+      .flash {
+        background: white;
+        width:      100%;
+        height:     100%;
+        z-index:    10;
+        top:        0;
+        left:       0;
+        position:   fixed;
+      }
+      .end {
+        font-size: 500px;
+        text-align: center;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flash">
+    </div>
+    <div class="container">
+      <div class="day">Day 1</div>
+      <img src="parker.png" class="parker"/>
+      <div class="text-box">
+
+      </div>
+
+    </div>
+
+    <script>
+    $(document).ready(() => {
+      $(".parker").hide();
+      $(".flash").hide();
+      //Capitalization Function
+      const capitalize = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+      //Local storage to retrieve name player gave
+      let name = localStorage.getItem("Name");
+      $(".parker").fadeIn(2000, () => {
+        $(".text-box").html(`<h1>John</h1><p>We finally meet, ${name}.</p>`);
+
+        $(".text-box").click(() => {
+          $(".text-box").html(`<h1>${name}</h1><p>Whats that supposed to mean?</p>`);
+
+          $(".text-box").click(() => {
+            $(".text-box").html(`<h1>John</h1><p>You think I wouldn't recognize any of your Boss's pigs?</p>`);
+
+            $(".text-box").click(() => {
+              $(".text-box").html(`<h1>${name}</h1><p>...</p>`);
+
+              $(".text-box").click(() => {
+                $(".text-box").html(`<h1>John</h1><p>What?</p>`);
+
+                $(".text-box").click(() => {
+                  $(".text-box").html(`<h1>John</h1><p>Eh, doesn't matter. See you in hell.</p>`);
+
+                  $(".text-box").click(() => {
+                    $(".text-box").html(`<h1>John</h1><p><i>Reveals a shotgun</i></p>`);
+                    $(".text-box").click(() => {
+                      $(".flash").fadeIn(500).fadeOut(500, () => {
+                        setTimeout(() => {
+                          $("body").html(`<div class="end"><p>The End</p></div>`);
+                        }, 500);
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+    </script>
+  </body>
+</html>

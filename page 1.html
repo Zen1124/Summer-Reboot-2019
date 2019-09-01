@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <title>Office</title>
+    <style>
+      body {
+        background-color: blue;
+        background-image: url("computer pov.gif");
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="text-box">
+
+    </div>
+    <button class="show-list-button">Show List</button>
+    <script>
+    $(document).ready(() => {
+      const capitalize = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+      let clicked = 0;
+      //Local storage to retrieve name player gave
+      let name = localStorage.getItem("Name");
+
+      $(".show-list-button").hide();
+
+      //Dialogue
+      $(".text-box").html(`<h1>${name}</h1><p>Another day at work...</p>`);
+      $(".text-box").click(() => {
+        $(".text-box").html(`<h1>Boss</h1><p>HEY!</p>`);
+
+        $(".text-box").click(() => {
+          $(".text-box").html(`<h1>Boss</h1><p>I DON'T PAY YOU TO SIT AROUND ON YOUR ASS ALL DAY!</p>`);
+
+          $(".text-box").click(() => {
+            $(".text-box").html(`<h1>${name}</h1><p>Well, you didn't give me anything to do, boss.</p>`);
+
+            $(".text-box").click(() => {
+              $(".text-box").html(`<h1>Boss</h1><p>Alright then, here's a list.</p>`);
+
+              $(".text-box").click(() => {
+                if(clicked == 0) {
+                  clicked++;
+                  $(".text-box").fadeOut(1000);
+                  $.ajax({
+                    url: 'https://randomuser.me/api/?results=5&nat=us&noinfo',
+                    dataType: 'json',
+                    success: function(data) {
+                      $("body").append(`<div class="list"></div>`);
+                      let listOfPeople = data.results;
+                      localStorage.setItem("People", JSON.stringify(listOfPeople));
+                      for(let x = 0;x < listOfPeople.length;x++) {
+                        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
+                      }
+                      $(".list").append(`<p>John Parker</p>`);
+
+                        setTimeout(() => {
+                          $(".list").fadeOut(3000, () => {
+                            $(".text-box").html(`<h1>${name}</h1><p>So what exactly do you want me to do?</p>`);
+                            $(".text-box").fadeIn(1000);
+
+                            $(".text-box").click(() => {
+                              $(".text-box").html(`<h1>Boss</h1><p>I want you to "talk" to these individuals about the money they borrowed.</p>`);
+
+                              $(".text-box").click(() => {
+                                $(".text-box").html(`<h1>${name}</h1><p>There isn't any information on this damn paper! How am I supposed to find them?</p>`);
+
+                                $(".text-box").click(() => {
+                                  $(".text-box").html(`<h1>Boss</h1><p>Figure it out. </p>`);
+
+                                  $(".text-box").click(() => {
+                                    $(".text-box").html(`<h1>Boss</h1><p>All you have to know is that $200,000 better be on my table by the end of this week!</p>`);
+
+                                    $(".text-box").click(() => {
+                                      $(".text-box").html(`<h1>Boss</h1><p>(Plug walks out)</p>`);
+
+                                      $(".text-box").click(() => {
+                                        $(".text-box").html(`<h1>${name}</h1><i><p>Yep, just another day at the office</p></i>`);
+                                        $(".show-list-button").show();
+
+                                        $(".show-list-button").click(() => {
+                                          $(".list").show();
+                                        });
+                                        $(".list").click(() => {
+                                          $(".list").hide();
+                                        });
+
+                                        $(".text-box").click(() => {
+                                          $(".text-box").html(`<h1>${name}</h1><p>Jesus, how am I going to find these guys by myself...</p>`);
+
+                                          $(".text-box").click(() => {
+                                            $("body").append(`<div class="decisions"></div>`);
+                                            $(".decisions").append(`<div class="decision" id="d-1"><p>Search Online</p></div>`);
+                                            $(".decisions").append(`<div class="decision" id="d-2"><p>Phone Book</p></div>`);
+
+                                            //User choses online
+                                            $("#d-1").click(() => {
+                                              $(".decisions").hide();
+                                              $(".text-box").html(`<h1>${name}</h1><p>Search for them online? Of course!</p>`);
+                                              $(".text-box").click(() => {
+                                                $(".text-box").fadeOut(2000, () => { //scene change, next page
+                                                  window.location.href = "online.html"
+                                                });
+                                              });
+                                            });
+                                            //User choses phone
+                                            $("#d-2").click(() => {
+                                              $(".decisions").hide();
+                                              $(".text-box").html(`<h1>${name}</h1><p>Lets go old school, I guess.</p>`);
+                                              $(".text-box").click(() => {
+                                                $(".text-box").fadeOut(2000, () => { //scene change, next page
+                                                  window.location.href = "phone.html"
+                                                });
+                                              });
+                                            });
+                                          });
+                                        });
+                                      });
+                                    });
+                                  });
+                                });
+                              });
+                            })
+                          });
+                        }, 2000)
+                      } //End of randomuser scope
+                    });
+                  } else {
+                    console.log("Bruh")
+                  }
+                });
+              });
+            });
+          });
+      });
+      //On document start
+    });
+    </script>
+  </body>
+</html>

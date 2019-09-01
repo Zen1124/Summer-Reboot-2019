@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <title>Dark Street</title>
+    <style>
+      body {
+        background-color: white;
+        background-image: url("night-street.jpg");
+        height: 500px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+      .ambush {
+        top: 70%;
+        height: 900px;
+      }
+      .flash {
+        background: white;
+        width:      100%;
+        height:     100%;
+        z-index:    10;
+        top:        0;
+        left:       0;
+        position:   fixed;
+      }
+      .end {
+        font-size: 500px;
+        text-align: center;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flash">
+        </div>
+      <div class="container">
+        <div class="day">Day 1</div>
+        <button class="show-list-button">Show List</button>
+        <img src="ambush.png" class="ambush"/>
+        <div class="text-box">
+        </div>
+      </div>
+
+
+    <script>
+    $(document).ready(() => {
+      $(".ambush").hide();
+      $(".flash").hide();
+      //Capitalization Function
+      const capitalize = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+      //Local storage to retrieve name player gave and list of targets
+      let name = localStorage.getItem("Name");
+      let listOfPeople = JSON.parse(localStorage.getItem("People"));
+      console.log(listOfPeople);
+      $("body").append(`<div class="list"></div>`);
+      for(let x = 0;x < listOfPeople.length;x++) {
+        $(".list").append(`<p>${capitalize(listOfPeople[x].name.first)} ${capitalize(listOfPeople[x].name.last)}</p>`);
+      }
+      $(".list").append(`<p>John Parker</p>`);
+      $(".list").hide();
+      $(".list").fadeIn(2000, () => {
+        $(".text-box").html(`<h1>${name}</h1><p>That was a long day...</p>`);
+        $(".text-box").click(() => {
+          $(".text-box").html(`<h1>${name}</h1><p>It can't get any worse I guess</p>`);
+
+          $(".text-box").click(() => {
+            $(".ambush").fadeIn(2000, () => {
+              $(".text-box").html(`<h1>Group Of Men</h1><p><i>Appears</i></p>`);
+
+              $(".text-box").click(() => {
+                $(".text-box").html(`<h1>Guy in the Middle</h1><p>Mr. Parker sends his regards!</p>`);
+
+                $(".text-box").click(() => {
+                  $(".text-box").off();
+                  $(".flash").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100, () => {
+
+
+                    $(".text-box").click(() => {
+                      $(".text-box").html(`<h1></h1><p><i>The sound of an Israeli uzi fills the air</i></p>`);
+
+                      $(".text-box").click(() => {
+                        $("body").html(`<div class="end"><p>The End</p></div>`);
+
+                      });
+                    });
+                  });
+                });
+
+
+
+              });
+            });
+          });
+        });
+      });
+      //Show List Button
+      $(".show-list-button").click(() => {
+        $(".list").show();
+      });
+      $(".list").click(() => {
+        $(".list").hide();
+      });
+    });
+    </script>
+  </body>
+</html>

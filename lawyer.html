@@ -54,6 +54,7 @@
     <script>
     $(document).ready(() => {
       $(".parker").hide();
+      $(".flash").hide();
       //Capitalization Function
       const capitalize = (s) => {
         return s.charAt(0).toUpperCase() + s.slice(1)
@@ -80,8 +81,12 @@
 
                   $(".text-box").click(() => {
                     $(".text-box").html(`<h1>John</h1><p><i>Reveals a shotgun</i></p>`);
-                    $(".flash").fadeOut(200).fadeIn(200, () => {
-                      $("body").html(`<div class="end"><p>The End</p></div>`);
+                    $(".text-box").click(() => {
+                      $(".flash").fadeIn(500).fadeOut(500, () => {
+                        setTimeout(() => {
+                          $("body").html(`<div class="end"><p>The End</p></div>`);
+                        }, 500);
+                      });
                     });
                   });
                 });
